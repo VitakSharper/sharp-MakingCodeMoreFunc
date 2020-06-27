@@ -1,4 +1,6 @@
-﻿namespace MakingCodeMoreFunc
+﻿using System;
+
+namespace MakingCodeMoreFunc
 {
     public class Empty : SpecificMoney
     {
@@ -7,9 +9,10 @@
         {
         }
 
-        public override decimal Withdraw(Currency currency, decimal amount)
-        {
-            throw new System.NotImplementedException();
-        }
+        public override Money On(Timestamp time) =>
+            this;
+
+        public override Tuple<Amount, Money> Take(decimal amount) =>
+            Tuple.Create(Amount.Zero(base.Currency), (Money)this);
     }
 }
