@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MakingCodeMoreFunc
@@ -12,12 +11,12 @@ namespace MakingCodeMoreFunc
         public static IEnumerable<SpecificMoney> Of(this IEnumerable<SpecificMoney> moneys, Currency currency) =>
             moneys.Select(m => m.Of(currency));
 
-        public static IEnumerable<Tuple<Amount, Money>> Take(this IEnumerable<SpecificMoney> moneys, decimal amount)
+        public static IEnumerable<(Amount, Money)> Take(this IEnumerable<SpecificMoney> moneys, decimal amount)
         {
             decimal rest = amount;
             foreach (var money in moneys)
             {
-                Tuple<Amount, Money> current = money.Take(rest);
+                (Amount, Money) current = money.Take(rest);
                 yield return current;
                 rest -= current.Item1.Value;
             }

@@ -23,6 +23,6 @@ namespace MakingCodeMoreFunc
         /// </summary>
         /// <param name="amount"></param>
         /// <returns>a tuple of Amount taken and Remaining money</returns>
-        public abstract Tuple<Amount, Money> Take(decimal amount);
+        public abstract (Amount taken, Money remaining) Take(decimal amount);
     }
 }

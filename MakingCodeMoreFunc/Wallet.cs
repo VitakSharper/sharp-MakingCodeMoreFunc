@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace MakingCodeMoreFunc
 {
@@ -16,16 +15,17 @@ namespace MakingCodeMoreFunc
         /// <returns></returns>
         public Amount Charge(Currency currency, Amount toCharge)
         {
-            var split =
-                Content
-                    .On(Timestamp.Now)
-                    .Of(toCharge.Currency)
-                    .Take(toCharge.Value)
-                    .ToList();
+            //var split =
+            //    Content
+            //        .On(Timestamp.Now)
+            //        .Of(toCharge.Currency)
+            //        .Take(toCharge.Value)
+            //        .ToList();
 
-            Content = split.Select(tuple => tuple.Item2).ToList();
-            var total = split.Sum(tuple => tuple.Item1.Value);
-            return new Amount(toCharge.Currency, total);
+            //Content = split.Select(tuple => tuple.Item2).ToList();
+            //var total = split.Sum(tuple => tuple.Item1.Value);
+            //return new Amount(toCharge.Currency, total);
+            return null;
         }
     }
 }

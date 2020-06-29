@@ -14,7 +14,11 @@ namespace MakingCodeMoreFunc
         public override Money On(Timestamp time) =>
             new SpecificCard(this.Currency, this.Card.CardOn(time));
 
-        public override Tuple<Amount, Money> Take(decimal amount) =>
-            this.Card.Take(base.Currency, amount);
+        //public override (Amount taken, Money remaining) Take(decimal amount) =>
+        //    this.Card.Take(base.Currency, amount);
+        public override (Amount taken, Money remaining) Take(decimal amount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

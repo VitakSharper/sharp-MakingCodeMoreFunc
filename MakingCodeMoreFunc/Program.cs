@@ -1,4 +1,7 @@
-﻿namespace MakingCodeMoreFunc
+﻿using System;
+using System.Collections.Generic;
+
+namespace MakingCodeMoreFunc
 {
     class Program
     {
@@ -17,6 +20,26 @@
 
             //Thread.Sleep(3000);
             //decimal available3 = card.GetAvailableAmount(20);
+            Console.WriteLine($"{DynamicFibonacci(10)}");
+        }
+
+        private static readonly IList<long> DynamicCache = new List<long> { 0, 1 };
+
+        static long DynamicFibonacci(int n)
+        {
+            while (DynamicCache.Count <= n)
+            {
+                DynamicCache.Add(-1);
+            }
+
+            if (DynamicCache[n] < 0)
+            {
+                DynamicCache[n] = n < 2
+                    ? n
+                    : DynamicFibonacci(n - 1) + DynamicFibonacci(n - 2);
+            }
+
+            return DynamicCache[n];
         }
     }
 

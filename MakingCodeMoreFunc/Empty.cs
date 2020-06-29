@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MakingCodeMoreFunc
+﻿namespace MakingCodeMoreFunc
 {
     public class Empty : SpecificMoney
     {
@@ -12,7 +10,7 @@ namespace MakingCodeMoreFunc
         public override Money On(Timestamp time) =>
             this;
 
-        public override Tuple<Amount, Money> Take(decimal amount) =>
-            Tuple.Create(Amount.Zero(base.Currency), (Money)this);
+        public override (Amount taken, Money remaining) Take(decimal amount) =>
+            (Amount.Zero(base.Currency), (Money)this);
     }
 }
