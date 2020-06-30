@@ -2,7 +2,7 @@
 
 namespace MoreObjectOriented.AccountState
 {
-    public class Frozen : IFreezable
+    public class Frozen : IAccountState
     {
         private Action OnUnfreeze { get; }
 
@@ -12,12 +12,29 @@ namespace MoreObjectOriented.AccountState
         }
 
 
-        public IFreezable Deposit() =>
-            new Active(OnUnfreeze);
+        public IAccountState Deposit(Action addToBalance)
+        {
+            OnUnfreeze();
+            addToBalance();
+            return new Active(OnUnfreeze);
+        }
 
-        public IFreezable Withdraw() =>
-            new Active(OnUnfreeze);
+        public IAccountState Withdraw(Action subtractFromBalance)
+        {
+            OnUnfreeze();
+            subtractFromBalance();
+            return new Active(OnUnfreeze);
+        }
 
-        public IFreezable Freeze() => this;
+        public IAccountState Freeze() => this;
+        public IAccountState HolderVerified()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAccountState Close()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

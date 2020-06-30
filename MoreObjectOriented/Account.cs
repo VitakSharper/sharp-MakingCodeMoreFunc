@@ -1,56 +1,36 @@
 ﻿using MoreObjectOriented.AccountState;
 using System;
 
+// Turning Account class to Single Responsibility Principle - SRP;
 namespace MoreObjectOriented
 {
     public class Account
     {
         public decimal Balance { get; private set; }
-        private bool IsVerified { get; set; }
-        private bool IsClosed { get; set; }
-        private IFreezable Freezable { get; set; }
+
+        private IAccountState State { get; set; }
 
         public Account(Action onUnfreeze)
         {
-            Freezable = new Active(onUnfreeze);
+            State = new NotVerified(onUnfreeze);
         }
 
-        public void Deposit(decimal amount)
-        {
-            if (IsClosed) return;
-            // Deposit money;
-            Freezable = Freezable.Deposit();
-            Balance += amount;
-        }
+        // Turn to callback pattern;
+        public void Deposit(decimal amount) =>
+            State = State.Deposit((() => { Balance += amount; }));
 
 
-        public void Withdraw(decimal amount)
-        {
-            if (!IsVerified)
-                return;
-            if (IsClosed)
-                return;
-            Freezable = Freezable.Withdraw();
-            Balance -= amount;
-            // Withdraw money;
-        }
+        public void Withdraw(decimal amount) =>
+            State = State.Withdraw((() => { Balance -= amount; }));
 
 
-        public void HolderVerified()
-        {
-            IsVerified = true;
-        }
+        public void HolderVerified() =>
+            State = State.HolderVerified();
 
-        public void Close()
-        {
-            IsClosed = true;
-        }
+        public void Close() =>
+            State = State.Close();
 
-        public void Freeze()
-        {
-            if (IsClosed) return; // Account must not be closed;
-            if (!IsVerified) return; // Account must be verified;
-            Freezable = Freezable.Freeze();
-        }
+        public void Freeze() =>
+            State = State.Freeze();
     }
 }
