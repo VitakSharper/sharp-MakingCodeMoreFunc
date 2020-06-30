@@ -35,11 +35,7 @@ namespace DomainLogicSequences
                     // Selection - Standard query operation which filters out unwanted elements;
                     .Where(painter => painter.IsAvailable)
                     // Aggregate function - Takes a sequence and returns a single value or object;
-                    .Aggregate((IPainter)null, (best, cur) =>
-                       best == null ||
-                       cur.EstimateCompensation(sqMeters) < best.EstimateCompensation(sqMeters)
-                           ? cur
-                           : best);
+                    .WithMinimum(painter => painter.EstimateCompensation(sqMeters));
         }
 
         static void Main()
