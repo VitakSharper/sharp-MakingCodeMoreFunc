@@ -13,10 +13,17 @@ namespace MakingCodeMoreFunc
 
         // Functional Object Filter, Isolated,Reusable,Will never change;
 
+        /// <summary>
+        /// Filters money object by currency
+        /// Overloading the Equality and Inequality operators
+        /// </summary>
+        /// <param name="currency"></param>
+        /// <returns></returns>
         public override SpecificMoney Of(Currency currency) =>
-            currency.Equals(Currency)
+            currency == Currency
                 ? this
                 : new Empty(currency);
+
 
         /// <summary>
         /// receives the amount to take from the Money object 

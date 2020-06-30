@@ -3,7 +3,7 @@
 namespace MakingCodeMoreFunc
 {
     public class Timestamp
-    //: IComparable<DateTime>, IComparable<Timestamp>, IComparable<Date>, IComparable<Month>
+        : IComparable<DateTime>, IComparable<Timestamp>, IComparable<Date>, IComparable<Month>
     {
         private DateTime UtcTime { get; }
 
@@ -23,10 +23,10 @@ namespace MakingCodeMoreFunc
         public int CompareTo(Timestamp other) =>
             this.UtcTime.CompareTo(other.UtcTime);
 
-        //public int CompareTo(Date other) =>
-        //    -other.CompareTo(this.UtcTime);
+        public int CompareTo(Date other) =>
+            -other.CompareTo(this.UtcTime);
 
-        //public int CompareTo(Month other) =>
-        //    -other.CompareTo(this.UtcTime);
+        public int CompareTo(Month other) =>
+            -other.CompareTo(this.UtcTime);
     }
 }

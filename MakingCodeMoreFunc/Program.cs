@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MakingCodeMoreFunc
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             //var card = new BankCardTest
             //{
@@ -20,26 +20,25 @@ namespace MakingCodeMoreFunc
 
             //Thread.Sleep(3000);
             //decimal available3 = card.GetAvailableAmount(20);
-            Console.WriteLine($"{DynamicFibonacci(10)}");
-        }
 
-        private static readonly IList<long> DynamicCache = new List<long> { 0, 1 };
 
-        static long DynamicFibonacci(int n)
-        {
-            while (DynamicCache.Count <= n)
-            {
-                DynamicCache.Add(-1);
-            }
+            //var amt = new Amount(Currency.USD, 100);
 
-            if (DynamicCache[n] < 0)
-            {
-                DynamicCache[n] = n < 2
-                    ? n
-                    : DynamicFibonacci(n - 1) + DynamicFibonacci(n - 2);
-            }
+            //Console.WriteLine($"Have {amt}: ");
+            // deconstructing into two variables
+            // use _ to discard a component you don't need
+            //(Amount taken, _) = amt.Of(Currency.USD).Take(50);
+            //Console.WriteLine($"can take {taken}");
 
-            return DynamicCache[n];
+            IDictionary<Currency, Money> moneys = new Dictionary<Currency, Money>();
+
+            Money money = new Amount(Currency.USD, 100);
+            moneys.Add(Currency.USD, money);
+            Console.WriteLine($"Added {money}");
+
+            Console.WriteLine(moneys.ContainsKey(Currency.USD)
+                ? $"Found {moneys[Currency.USD]}"
+                : $"{Currency.USD} not found.");
         }
     }
 
