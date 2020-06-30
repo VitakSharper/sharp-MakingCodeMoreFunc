@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoreObjectOriented.AccountState;
+using System;
 
 namespace MoreObjectOriented
 {
@@ -7,21 +8,18 @@ namespace MoreObjectOriented
         public decimal Balance { get; private set; }
         private bool IsVerified { get; set; }
         private bool IsClosed { get; set; }
-        private Action OnUnfreeze { get; }
-        private Action ManageUnfreezing { get; set; }
+        private IFreezable Freezable { get; set; }
 
         public Account(Action onUnfreeze)
         {
-            OnUnfreeze = onUnfreeze;
-            ManageUnfreezing = StayUnfrozen;
+            Freezable = new Active(onUnfreeze);
         }
 
         public void Deposit(decimal amount)
         {
             if (IsClosed) return;
             // Deposit money;
-            ManageUnfreezing();
-
+            Freezable = Freezable.Deposit();
             Balance += amount;
         }
 
@@ -32,21 +30,11 @@ namespace MoreObjectOriented
                 return;
             if (IsClosed)
                 return;
-            ManageUnfreezing();
+            Freezable = Freezable.Withdraw();
             Balance -= amount;
             // Withdraw money;
         }
 
-
-        private void StayUnfrozen()
-        {
-        }
-
-        private void Unfreeze()
-        {
-            OnUnfreeze();
-            ManageUnfreezing = StayUnfrozen;
-        }
 
         public void HolderVerified()
         {
@@ -62,7 +50,7 @@ namespace MoreObjectOriented
         {
             if (IsClosed) return; // Account must not be closed;
             if (!IsVerified) return; // Account must be verified;
-            ManageUnfreezing = Unfreeze;
+            Freezable = Freezable.Freeze();
         }
     }
 }
