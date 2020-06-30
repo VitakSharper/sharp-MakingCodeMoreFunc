@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MakingCodeMoreFunc
+﻿namespace MakingCodeMoreFunc
 {
     internal static class Program
     {
@@ -30,15 +27,33 @@ namespace MakingCodeMoreFunc
             //(Amount taken, _) = amt.Of(Currency.USD).Take(50);
             //Console.WriteLine($"can take {taken}");
 
-            IDictionary<Currency, Money> moneys = new Dictionary<Currency, Money>();
+            //IDictionary<Currency, Money> moneys = new Dictionary<Currency, Money>();
 
-            Money money = new Amount(Currency.USD, 100);
-            moneys.Add(Currency.USD, money);
-            Console.WriteLine($"Added {money}");
+            //Money money = new Amount(Currency.USD, 100);
+            //moneys.Add(Currency.USD, money);
+            //Console.WriteLine($"Added {money}");
 
-            Console.WriteLine(moneys.ContainsKey(Currency.USD)
-                ? $"Found {moneys[Currency.USD]}"
-                : $"{Currency.USD} not found.");
+            //Console.WriteLine(moneys.ContainsKey(Currency.USD)
+            //    ? $"Found {moneys[Currency.USD]}"
+            //    : $"{Currency.USD} not found.");
+        }
+
+        static bool CanPay(Money money, Amount expense)
+        {
+            var now = Timestamp.Now;
+
+            switch (money)
+            {
+                case Amount amount when amount.Currency == expense.Currency:
+                    return amount.Value >= expense.Value;
+                case GiftCard gift when gift.ValidBefore.CompareTo(now) >= 0 &&
+                                        gift.Currency == expense.Currency:
+                    return gift.Value >= expense.Value;
+                case BankCard card when card.ValidBefore.CompareTo(now) >= 0:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 

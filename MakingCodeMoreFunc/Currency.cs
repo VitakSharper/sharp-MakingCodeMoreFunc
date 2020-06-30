@@ -18,7 +18,7 @@ namespace MakingCodeMoreFunc
         public static Currency EUR => new Currency("EUR");
         public static Currency JPY => new Currency("JPY");
 
-
+        // operators is & as failed on runtime, operators && failed on compile time;
         public override bool Equals(object obj) =>
             Equals(obj as Currency);
 
