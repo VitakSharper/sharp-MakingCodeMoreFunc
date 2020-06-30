@@ -7,12 +7,13 @@ namespace MoreObjectOriented
         public decimal Balance { get; private set; }
         private bool IsVerified { get; set; }
         private bool IsClosed { get; set; }
-        private bool IsFrozen { get; set; }
         private Action OnUnfreeze { get; }
+        private Action ManageUnfreezing { get; set; }
 
         public Account(Action onUnfreeze)
         {
             OnUnfreeze = onUnfreeze;
+            ManageUnfreezing = StayUnfrozen;
         }
 
         public void Deposit(decimal amount)
@@ -36,13 +37,15 @@ namespace MoreObjectOriented
             // Withdraw money;
         }
 
-        private void ManageUnfreezing()
+
+        private void StayUnfrozen()
         {
-            if (IsFrozen)
-            {
-                IsFrozen = false;
-                OnUnfreeze();
-            }
+        }
+
+        private void Unfreeze()
+        {
+            OnUnfreeze();
+            ManageUnfreezing = StayUnfrozen;
         }
 
         public void HolderVerified()
@@ -59,7 +62,7 @@ namespace MoreObjectOriented
         {
             if (IsClosed) return; // Account must not be closed;
             if (!IsVerified) return; // Account must be verified;
-            IsFrozen = true;
+            ManageUnfreezing = Unfreeze;
         }
     }
 }
