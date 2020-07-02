@@ -4,7 +4,7 @@
 
 namespace DomainLogicSequences
 {
-    class ProportionalPainter : IPainter
+    public class ProportionalPainter : IPainter
     {
         public TimeSpan TimePerSqMeter { get; set; }
         public double DollarsPerHour { get; set; }

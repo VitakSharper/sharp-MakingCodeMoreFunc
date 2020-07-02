@@ -14,7 +14,7 @@ namespace DomainLogicSequences
         public bool IsAvailable => Painters.Any(painter => painter.IsAvailable);
 
         private IEnumerable<TPainter> Painters { get; }
-        private Func<double, IEnumerable<TPainter>, IPainter> Reduce { get; }
+        public Func<double, IEnumerable<TPainter>, IPainter> Reduce { get; set; }
 
         public CompositePainter(
             IEnumerable<TPainter> painters,

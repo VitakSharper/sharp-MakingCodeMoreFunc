@@ -38,7 +38,7 @@ namespace DomainLogicSequences
         {
             IEnumerable<ProportionalPainter> painters = new ProportionalPainter[10];
 
-            var painter = CompositePainterFactories.CreateGroup(painters);
+            var painter = CompositePainterFactories.CombineProportional(painters);
         }
     }
 }
