@@ -2,12 +2,12 @@
 
 namespace NullChecks
 {
-    internal class Warranty
+    internal class TimeLimitedWarranty : IWarranty
     {
         private DateTime DateIssued { get; }
         private TimeSpan Duration { get; }
 
-        public Warranty(TimeSpan duration, DateTime dateIssued)
+        public TimeLimitedWarranty(DateTime dateIssued, TimeSpan duration)
         {
             Duration = duration;
             DateIssued = dateIssued;

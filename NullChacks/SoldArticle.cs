@@ -1,14 +1,16 @@
-﻿namespace NullChecks
+﻿using System;
+
+namespace NullChecks
 {
     internal class SoldArticle
     {
-        public Warranty MoneyBackGuarantee { get; }
-        public Warranty ExpressWarranty { get; }
+        public IWarranty MoneyBackGuarantee { get; }
+        public IWarranty ExpressTimeLimitedWarranty { get; }
 
-        public SoldArticle(Warranty moneyBackGuarantee, Warranty expressWarranty)
+        public SoldArticle(IWarranty moneyBack, IWarranty express)
         {
-            MoneyBackGuarantee = moneyBackGuarantee;
-            ExpressWarranty = expressWarranty;
+            MoneyBackGuarantee = moneyBack ?? throw new ArgumentNullException(nameof(moneyBack));
+            ExpressTimeLimitedWarranty = express ?? throw new ArgumentNullException(nameof(express));
         }
     }
 }
