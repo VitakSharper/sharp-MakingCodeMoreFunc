@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoreObjectOriented", "MoreO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainLogicSequences", "DomainLogicSequences\DomainLogicSequences.csproj", "{A3F17EFC-443C-4048-B73B-65951400A2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmutableObjects", "ImmutableObjects\ImmutableObjects.csproj", "{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmutableObjects", "ImmutableObjects\ImmutableObjects.csproj", "{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullChecks", "NullChacks\NullChecks.csproj", "{AED07B14-12B7-4250-95EA-6DA65C00B512}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED07B14-12B7-4250-95EA-6DA65C00B512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED07B14-12B7-4250-95EA-6DA65C00B512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED07B14-12B7-4250-95EA-6DA65C00B512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED07B14-12B7-4250-95EA-6DA65C00B512}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
