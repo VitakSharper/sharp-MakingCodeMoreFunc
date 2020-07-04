@@ -32,7 +32,7 @@ namespace NullChecks
             var warrantySpan = TimeSpan.FromDays(365);
 
             IWarranty moneyBack = new TimeLimitedWarranty(sellingDate, moneyBackSpan);
-            IWarranty warranty = new TimeLimitedWarranty(sellingDate, warrantySpan);
+            IWarranty warranty = new LifeTimeWarranty(sellingDate);
 
             var goods = new SoldArticle(VoidWarranty.Instance, warranty);
             ClaimWarranty(goods);
