@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MakingCodeMoreFunc", "Makin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fibonaci", "Fibonaci\Fibonaci.csproj", "{49EB3D97-4C2A-402F-A74B-C637FDB64B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreObjectOriented", "MoreObjectOriented\MoreObjectOriented.csproj", "{B9C30542-D930-4DB8-A200-E3CBEC919CBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoreObjectOriented", "MoreObjectOriented\MoreObjectOriented.csproj", "{B9C30542-D930-4DB8-A200-E3CBEC919CBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLogicSequences", "DomainLogicSequences\DomainLogicSequences.csproj", "{A3F17EFC-443C-4048-B73B-65951400A2EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainLogicSequences", "DomainLogicSequences\DomainLogicSequences.csproj", "{A3F17EFC-443C-4048-B73B-65951400A2EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmutableObjects", "ImmutableObjects\ImmutableObjects.csproj", "{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A3F17EFC-443C-4048-B73B-65951400A2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F17EFC-443C-4048-B73B-65951400A2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F17EFC-443C-4048-B73B-65951400A2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83F20C98-3FA7-4A0F-B500-A163FAEB1F15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
