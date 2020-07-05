@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NullChecks.Common;
+using System;
 
 namespace NullChecks
 {
@@ -13,7 +13,7 @@ namespace NullChecks
         public IWarranty MoneyBackGuarantee { get; private set; }
         public IWarranty ExpressWarranty { get; private set; }
         private IWarranty NotOperationalWarranty { get; }
-        private List<Part> Circuitry { get; set; } = new List<Part>();
+        private Option<Part> Circuitry { get; set; } = Option<Part>.None();
         private IWarranty FailedCircuitryWarranty { get; set; }
         private IWarranty CircuitryWarranty { get; set; }
 
@@ -37,7 +37,7 @@ namespace NullChecks
         // Easiest way to implement Optional Object is to implement as a collection;
         public void CircuitryNotOperations(DateTime detectedOn)
         {
-            Circuitry.ForEach(circuitry => // if null (no objects in the List) then ForEach not executed
+            Circuitry.Do(circuitry => // if null (no objects in the List) then ForEach not executed
                 {
                     circuitry.MarkDefective(detectedOn); // These call may end in NullReferenceException
                     CircuitryWarranty = FailedCircuitryWarranty;
@@ -47,13 +47,13 @@ namespace NullChecks
 
         public void InstallCircuitry(Part circuitry, IWarranty extendedWarranty)
         {
-            Circuitry = new List<Part>() { circuitry };
+            Circuitry = Option<Part>.Some(circuitry);
             FailedCircuitryWarranty = extendedWarranty;
         }
 
         public void ClaimCircuitryWarranty(Action onValidClaim)
         {
-            Circuitry.ForEach(circuitry =>
+            Circuitry.Do(circuitry =>
                     CircuitryWarranty.Claim(circuitry.DefectDetectedOn,
                         onValidClaim) // These call may end in NullReferenceException; Circuitry object might be null;
             );
