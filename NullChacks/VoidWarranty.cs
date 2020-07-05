@@ -17,6 +17,9 @@ namespace NullChecks
 
         public static VoidWarranty Instance => _instance ??= new VoidWarranty();
 
-        public bool IsValidOn(DateTime date) => false;
+
+        public void Claim(DateTime onDate, Action onValidClaim)
+        {
+        }
     }
 }

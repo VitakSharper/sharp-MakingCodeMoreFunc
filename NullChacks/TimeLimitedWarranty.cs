@@ -2,7 +2,6 @@
 
 namespace NullChecks
 {
-
     internal class TimeLimitedWarranty : IWarranty
     {
         private DateTime DateIssued { get; }
@@ -14,7 +13,14 @@ namespace NullChecks
             Duration = TimeSpan.FromDays(duration.Days);
         }
 
-        public bool IsValidOn(DateTime date) =>
+        public void Claim(DateTime onDate, Action onValidClaim)
+        {
+            if (!IsValidOn(onDate)) return;
+            onValidClaim.Invoke();
+        }
+
+
+        private bool IsValidOn(DateTime date) =>
             date.Date >= DateIssued && date.Date < DateIssued + Duration;
     }
 }

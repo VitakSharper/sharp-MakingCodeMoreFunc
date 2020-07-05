@@ -14,15 +14,10 @@ namespace NullChecks
         {
             var now = DateTime.Now;
 
-            if (article.MoneyBackGuarantee.IsValidOn(now))
-            {
-                Console.WriteLine("Offer money back.");
-            }
+            article.MoneyBackGuarantee.Claim(now, () =>
+                Console.WriteLine("Offer money back."));
 
-            if (article.ExpressTimeLimitedWarranty.IsValidOn(now))
-            {
-                Console.WriteLine("Offer repair.");
-            }
+            article.ExpressWarranty.Claim(now, () => Console.WriteLine("Offer repair."));
         }
 
         private static void Main()

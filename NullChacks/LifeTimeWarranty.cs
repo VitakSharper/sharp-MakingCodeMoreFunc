@@ -15,6 +15,12 @@ namespace NullChecks
             IssuingDate = issuingDate.Date;
         }
 
-        public bool IsValidOn(DateTime date) => date.Date >= IssuingDate;
+        public void Claim(DateTime onDate, Action onValidClaim)
+        {
+            if (!IsValidOn(onDate)) return;
+            onValidClaim();
+        }
+
+        private bool IsValidOn(DateTime date) => date.Date >= IssuingDate;
     }
 }
