@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NullChecks
 {
@@ -12,7 +13,7 @@ namespace NullChecks
         public IWarranty MoneyBackGuarantee { get; private set; }
         public IWarranty ExpressWarranty { get; private set; }
         private IWarranty NotOperationalWarranty { get; }
-        private Part Circuitry { get; set; }
+        private List<Part> Circuitry { get; set; } = new List<Part>();
         private IWarranty FailedCircuitryWarranty { get; set; }
         private IWarranty CircuitryWarranty { get; set; }
 
@@ -33,24 +34,29 @@ namespace NullChecks
             ExpressWarranty = NotOperationalWarranty;
         }
 
+        // Easiest way to implement Optional Object is to implement as a collection;
         public void CircuitryNotOperations(DateTime detectedOn)
         {
-            if (Circuitry == null) return;
-            Circuitry.MarkDefective(detectedOn); // These call may end in NullReferenceException
-            CircuitryWarranty = FailedCircuitryWarranty;
+            Circuitry.ForEach(circuitry => // if null (no objects in the List) then ForEach not executed
+                {
+                    circuitry.MarkDefective(detectedOn); // These call may end in NullReferenceException
+                    CircuitryWarranty = FailedCircuitryWarranty;
+                }
+            );
         }
 
         public void InstallCircuitry(Part circuitry, IWarranty extendedWarranty)
         {
-            Circuitry = circuitry;
+            Circuitry = new List<Part>() { circuitry };
             FailedCircuitryWarranty = extendedWarranty;
         }
 
         public void ClaimCircuitryWarranty(Action onValidClaim)
         {
-            if (Circuitry == null) return;
-            CircuitryWarranty.Claim(Circuitry.DefectDetectedOn,
-                onValidClaim); // These call may end in NullReferenceException; Circuitry object might be null;
+            Circuitry.ForEach(circuitry =>
+                    CircuitryWarranty.Claim(circuitry.DefectDetectedOn,
+                        onValidClaim) // These call may end in NullReferenceException; Circuitry object might be null;
+            );
         }
     }
 }
