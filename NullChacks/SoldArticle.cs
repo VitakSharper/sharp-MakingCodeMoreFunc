@@ -8,14 +8,17 @@ namespace NullChecks
     // Not used in this class - Branching instructions, Null references;
     // Optional objects - Handle cases where Null Object and Special Case are not applicable;
     // Object substitution eliminates branching based on object state; It cannot remove branching over method arguments;
-    [Flags]
-    enum DeviceStatus
-    {
-        AllFine = 0,
-        NotOperational = 1,
-        VisiblyDamaged = 2,
-        CircuitryFailed = 4
-    }
+
+    // Avoid using enumerations; They only represent state; In OO design we want state and behavior;
+    //[Flags]
+    //enum DeviceStatus
+    //{
+    //    AllFine = 0,
+    //    NotOperational = 1,
+    //    VisiblyDamaged = 2,
+    //    CircuitryFailed = 4
+    //}
+
 
     internal class SoldArticle
     {
@@ -36,26 +39,28 @@ namespace NullChecks
 
             //ExpressWarranty = VoidWarranty.Instance;
             CircuitryWarranty = VoidWarranty.Instance;
+            OperationalStatus = DeviceStatus.AllFine();
         }
 
         //public void VisibleDamage() => MoneyBackGuarantee = VoidWarranty.Instance;
         public void VisibleDamage()
         {
-            OperationalStatus |= DeviceStatus.VisiblyDamaged;
+            OperationalStatus = OperationalStatus.WithVisibleDamage();
         }
 
         public void NotOperational()
         {
-            OperationalStatus |= DeviceStatus.NotOperational;
+            OperationalStatus = OperationalStatus.NotOperational();
             //MoneyBackGuarantee = VoidWarranty.Instance;
             //ExpressWarranty = NotOperationalWarranty;
         }
 
         public void Repaired()
         {
-            OperationalStatus &= ~DeviceStatus.NotOperational; 
+            OperationalStatus = OperationalStatus.Repaired();
         }
 
+        // switch instruction jumps in O(1) time;
         public void ClaimWarranty(Action onValidClaim)
         {
             switch (OperationalStatus)
@@ -90,7 +95,7 @@ namespace NullChecks
                 .Do(c =>
                 {
                     c.MarkDefective(detectedOn);
-                    OperationalStatus |= DeviceStatus.CircuitryFailed;
+                    OperationalStatus = OperationalStatus.CircuitryFailed();
                 })
                 .Execute();
             //Circuitry.Do(circuitry => // if null (no objects in the List) then ForEach not executed
@@ -105,6 +110,7 @@ namespace NullChecks
         {
             Circuitry = Option<Part>.Some(circuitry);
             FailedCircuitryWarranty = extendedWarranty;
+            OperationalStatus = OperationalStatus.CircuitryReplaced();
         }
 
         public void ClaimCircuitryWarranty(Action onValidClaim)
