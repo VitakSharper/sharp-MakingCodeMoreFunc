@@ -1,5 +1,6 @@
 ﻿using NullChecks.Common;
 using System;
+using System.Collections.Generic;
 
 namespace NullChecks
 {
@@ -30,6 +31,7 @@ namespace NullChecks
         private IWarranty FailedCircuitryWarranty { get; set; }
         private IWarranty CircuitryWarranty { get; set; }
         private DeviceStatus OperationalStatus { get; set; }
+        private IReadOnlyDictionary<DeviceStatus, Action<Action>> WarrantyMap { get; set; }
 
 
         public SoldArticle(IWarranty moneyBack, IWarranty express)
@@ -66,27 +68,7 @@ namespace NullChecks
 
         public void ClaimWarranty(Action onValidClaim)
         {
-            switch (OperationalStatus)
-            {
-                case DeviceStatus.AllFine:
-                    MoneyBackGuarantee.Claim(DateTime.Now, onValidClaim);
-                    break;
-                case DeviceStatus.NotOperational:
-                case DeviceStatus.NotOperational | DeviceStatus.VisiblyDamaged:
-                case DeviceStatus.NotOperational | DeviceStatus.CircuitryFailed:
-                case DeviceStatus.NotOperational | DeviceStatus.VisiblyDamaged | DeviceStatus.CircuitryFailed:
-                    NotOperationalWarranty.Claim(DateTime.Now, onValidClaim);
-                    break;
-                case DeviceStatus.VisiblyDamaged:
-                    break;
-                case DeviceStatus.CircuitryFailed:
-                case DeviceStatus.VisiblyDamaged | DeviceStatus.CircuitryFailed:
-                    Circuitry
-                        .WhenSome()
-                        .Do(c => CircuitryWarranty.Claim(DateTime.Now, onValidClaim))
-                        .Execute();
-                    break;
-            }
+            WarrantyMap[OperationalStatus].Invoke(onValidClaim);
         }
 
 
