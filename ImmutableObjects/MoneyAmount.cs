@@ -18,7 +18,8 @@ namespace ImmutableObjects
             new MoneyAmount(Amount * factor, CurrencySymbol);
 
         // Avoid to overloads operator and let consumers rely on proper method calls;
-        public static MoneyAmount operator *(MoneyAmount amount, decimal factor) => amount.Scale(factor);
+        public static MoneyAmount operator *(MoneyAmount amount, decimal factor) => 
+            amount.Scale(factor);
 
         // obj can be a different object than MoneyAmount , let cast it to MoneyAmount;
         public override bool Equals(object obj) =>

@@ -7,7 +7,7 @@ namespace NullChecks
     // Null object has no state; It has no behavior; All instances of one Null Object class are the same;
     // Greatest value of a NUll Object class is the interface it is implementing; 
     // NUll Object is Singleton + ThreadStatic every thread will see a separate instance of the object no need on locking when new object is instantiated;
-    class VoidWarranty : IWarranty
+    internal class VoidWarranty : IWarranty
     {
         [ThreadStatic] private static VoidWarranty _instance;
 

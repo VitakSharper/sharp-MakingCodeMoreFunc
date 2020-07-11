@@ -22,14 +22,14 @@ namespace NullChecks
 
     internal class SoldArticle
     {
-        public IWarranty MoneyBackGuarantee { get; }
+        private IWarranty MoneyBackGuarantee { get; }
 
         //public IWarranty ExpressWarranty { get; }
         private IWarranty NotOperationalWarranty { get; }
         private Option<Part> Circuitry { get; set; } = Option<Part>.None();
         private IWarranty FailedCircuitryWarranty { get; set; }
         private IWarranty CircuitryWarranty { get; set; }
-        public DeviceStatus OperationalStatus { get; set; }
+        private DeviceStatus OperationalStatus { get; set; }
 
 
         public SoldArticle(IWarranty moneyBack, IWarranty express)
@@ -55,12 +55,15 @@ namespace NullChecks
             //ExpressWarranty = NotOperationalWarranty;
         }
 
+
         public void Repaired()
         {
             OperationalStatus = OperationalStatus.Repaired();
         }
 
         // switch instruction jumps in O(1) time;
+        // switch only supports trivial values; it not applicable to objects;
+
         public void ClaimWarranty(Action onValidClaim)
         {
             switch (OperationalStatus)
@@ -88,7 +91,8 @@ namespace NullChecks
 
 
         // Easiest way to implement Optional Object is to implement as a collection;
-        public void CircuitryNotOperations(DateTime detectedOn)
+
+        public void CircuitryNotOperational(DateTime detectedOn)
         {
             Circuitry
                 .WhenSome()

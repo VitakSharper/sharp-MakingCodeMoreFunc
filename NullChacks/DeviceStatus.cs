@@ -3,8 +3,10 @@
 namespace NullChecks
 {
     // Try to encapsulate state; That will prove valuable when you decide to change state representation;
+    // Avoid using enumerations; They only represent state; In OO design we want state and behavior;
+    // Consider making small classes immutable; Cost of creating new instances will likely be negligible;
 
-    class DeviceStatus
+    internal class DeviceStatus
     {
         [Flags]
         private enum StatusRepresentation
