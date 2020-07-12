@@ -20,6 +20,11 @@ namespace NullChecks
     //    CircuitryFailed = 4
     //}
 
+    // Substitute collaborating objects at run time;
+    // Use substitution ot modify behavior;
+    // Do not modify behavior by modifying code;
+    // Move complicated code into separate classes;
+
 
     internal class SoldArticle
     {
@@ -34,7 +39,7 @@ namespace NullChecks
         private IReadOnlyDictionary<DeviceStatus, Action<Action>> WarrantyMap { get; set; }
 
 
-        public SoldArticle(IWarranty moneyBack, IWarranty express)
+        public SoldArticle(IWarranty moneyBack, IWarranty express, IWarrantyMapFactory rulesFactory)
         {
             MoneyBackGuarantee = moneyBack ?? throw new ArgumentNullException(nameof(moneyBack));
             NotOperationalWarranty = express ?? throw new ArgumentNullException(nameof(express));
@@ -42,6 +47,18 @@ namespace NullChecks
             //ExpressWarranty = VoidWarranty.Instance;
             CircuitryWarranty = VoidWarranty.Instance;
             OperationalStatus = DeviceStatus.AllFine();
+            WarrantyMap = rulesFactory.Create(
+                ClaimMoneyBack, ClaimOperationalWarranty, ClaimCircuitryWarranty);
+        }
+
+        private void ClaimOperationalWarranty(Action obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ClaimMoneyBack(Action obj)
+        {
+            throw new NotImplementedException();
         }
 
         //public void VisibleDamage() => MoneyBackGuarantee = VoidWarranty.Instance;
@@ -73,7 +90,6 @@ namespace NullChecks
 
 
         // Easiest way to implement Optional Object is to implement as a collection;
-
         public void CircuitryNotOperational(DateTime detectedOn)
         {
             Circuitry

@@ -5,8 +5,9 @@ namespace NullChecks
     // Try to encapsulate state; That will prove valuable when you decide to change state representation;
     // Avoid using enumerations; They only represent state; In OO design we want state and behavior;
     // Consider making small classes immutable; Cost of creating new instances will likely be negligible;
+    // Class meant to be used as a lookup key must implement proper value semantic;
 
-    internal class DeviceStatus
+    public sealed class DeviceStatus : IEquatable<DeviceStatus>
     {
         [Flags]
         private enum StatusRepresentation
@@ -37,5 +38,18 @@ namespace NullChecks
 
         public DeviceStatus CircuitryFailed() =>
             new DeviceStatus(Representation | StatusRepresentation.CircuitryFailed);
+
+        public override int GetHashCode() => (int)Representation;
+
+        public override bool Equals(object obj) => Equals(obj as DeviceStatus);
+
+        public bool Equals(DeviceStatus other) =>
+            other != null && Representation == other.Representation;
+
+        public static bool operator ==(DeviceStatus a, DeviceStatus b) =>
+            ReferenceEquals(a, null) && ReferenceEquals(b, null) ||
+            (a?.Equals(b) == true);
+
+        public static bool operator !=(DeviceStatus a, DeviceStatus b) => !(a == b);
     }
 }
